@@ -4,15 +4,14 @@
 
 <script>
 import TableSearch from "./components/TableSearch.vue";
+import axios from "axios";
 
 export default {
   name: "App",
   data(){
     return{    
-    datas:[{id:1,fio:'ivan ogly',birthday:'1985-03-05',gender:true},
-   {id:2,fio:'Petr Mensh',birthday:'1980-12-01',gender:true},
-   {id:8,fio:'Ella Gudrick',birthday:'1961-08-22',gender:false},
-   {id:10,fio:'Zoe Melnik',birthday:'1992-06-27',gender:false}],
+      urlByAllUsers:'http://localhost:5000/user/all?page=1',
+    datas:[{}],
    filteringData:[],
    reverse:false,
    sortKey:''}
@@ -28,18 +27,21 @@ export default {
    return  this.filteringData;
   },
   updateListValues:function(str){
+    str.trim();
+    if(str!=""){    
     let search = new RegExp(`.*${str}.*`,'gi')
     this.filteringData = this.datas.filter(el=>
     {
       if( Object.values(el)
-      .filter(x=>{if(search.test(x.toString())){ 
+      .filter(x=>{if(x!==null&&search.test(x.toString())){ 
         return x;
       }}
       ).length>0)
       {   
         return el;
       }
-    })
+    })}
+    else {this.filteringData = this.datas;}
   },
       sortBy: function(sortKey) {
       this.reverse = (this.sortKey == sortKey) ? !this.reverse : false;
@@ -56,8 +58,22 @@ export default {
          if ( prev[this.sortKey] > next[this.sortKey] ) return 1;
         });
       }
+    },
+    async fetchUser(){
+      try{
+        const result = await axios.get(this.urlByAllUsers);
+        this.datas = result.data;
+        return result.data;
+      }
+      catch(e){
+        console.log('error: users not found',e)
+      }
     }
-  }
+  },
+      mounted(){
+     this.fetchUser().then(val=>{this.filteringData=[...val]})
+
+    }
 }; 
 </script>
 

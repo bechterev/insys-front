@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div><input @input="changeFilter" type="text" v-bind:value="filter"></div>
+  <div><input @input="changeFilter" type="search" v-bind:value="filter" placeholder=Search...></div>
   <div>
     <table>
       <thead>
@@ -54,5 +54,66 @@ methods:{
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+table {
+	width: 100%;
+	border: none;
+	margin-bottom: 20px;
+	border-collapse: separate;
+  text-align: center;
+}
+table thead th {
+	font-weight: bold;
 
+	border: none;
+	padding: 10px 15px;
+	background: #EDEDED;
+	font-size: 1.2rem;
+	border-top: 1px solid #ddd;
+}
+table tr th:first-child, table tr td:first-child {
+	border-left: 1px solid #ddd;
+}
+table tr th:last-child, table tr td:last-child {
+	border-right: 1px solid #ddd;
+}
+table thead tr th:first-child {
+	border-radius: 20px 0 0 0;
+}
+table thead tr th:last-child {
+	border-radius: 0 20px 0 0;
+}
+table tbody td {
+	
+	border: none;
+	padding: 10px 15px;
+	font-size: 1rem;
+	vertical-align: top;
+}
+table tbody tr:nth-child(even) {
+	background: #F8F8F8;
+}
+table tbody tr:last-child td{
+	border-bottom: 1px solid #ddd;
+}
+table tbody tr:last-child td:first-child {
+	border-radius: 0 0 0 20px;
+}
+table tbody tr:last-child td:last-child {
+	border-radius: 0 0 20px 0;
+}
+
+input[type=search] { 
+	color: black;  
+	text-align: left;
+	cursor: pointer;
+	display: block; 
+  font-size: 1.5rem;
+	width: 50%; 
+	letter-spacing: 4px;        
+	text-shadow: 0 0 2px rgb(85, 70, 70);       
+	word-spacing: 20px;      
+  margin-top: 2rem; 
+  margin-bottom: 2rem; 
+  margin-left: 25% ;        
+}
 </style>
